@@ -7,7 +7,7 @@ import re
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--min_count_word', default=1, help="Minimum count for words in the dataset", type=int)
-parser.add_argument('--data_dir', default='dbpedia/dbpedia_csv', help="Directory containing the dataset")
+parser.add_argument('--data_dir', default='./dbpedia_csv', help="Directory containing the dataset")
 
 # Hyper parameters for the vocab
 NUM_OOV_BUCKETS = 1 # number of buckets (= number of ids) for unknown words

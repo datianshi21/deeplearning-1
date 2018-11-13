@@ -24,7 +24,7 @@ flags.DEFINE_integer("batch_size", 128, "number of instances in a batch")
 flags.DEFINE_integer("save_checkpoints_steps", 5000, "Save checkpoints every this many steps")
 flags.DEFINE_integer("train_steps", 10000,
                      "Number of (global) training steps to perform")
-flags.DEFINE_string("data_dir", "dbpedia/dbpedia_csv", "Directory containing the dataset")
+flags.DEFINE_string("data_dir", "./dbpedia_csv", "Directory containing the dataset")
 flags.DEFINE_string("filter_sizes", "3,4,5", "Comma-separated list of number of window size in each filter")
 flags.DEFINE_string("pad_word", "<pad>", "used for pad sentence")
 FLAGS = flags.FLAGS
@@ -101,7 +101,9 @@ def my_model(features, labels, mode, params):
           padding="VALID")
       pooled_outputs.append(pool)
   h_pool = tf.concat(pooled_outputs, 3) # shape: (batch, 1, len(filter_size) * embedding_size, 1)
-  h_pool_flat = tf.reshape(h_pool, [-1, FLAGS.num_filters * len(params["filter_sizes"])]) # shape: (batch, len(filter_size) * embedding_size)
+  #h_pool_flat = tf.reshape(h_pool, [-1, FLAGS.num_filters * len(params["filter_sizes"])])
+  #shape: (batch, len(filter_size) * embedding_size)
+  h_pool_flat = tf.reshape(h_pool, [-1, FLAGS.num_filters * 3)])
   if 'dropout_rate' in params and params['dropout_rate'] > 0.0:
     h_pool_flat = tf.layers.dropout(h_pool_flat, params['dropout_rate'], training=(mode == tf.estimator.ModeKeys.TRAIN))
   logits = tf.layers.dense(h_pool_flat, FLAGS.num_classes, activation=None)
