@@ -103,7 +103,7 @@ def my_model(features, labels, mode, params):
   h_pool = tf.concat(pooled_outputs, 3) # shape: (batch, 1, len(filter_size) * embedding_size, 1)
   #h_pool_flat = tf.reshape(h_pool, [-1, FLAGS.num_filters * len(params["filter_sizes"])])
   #shape: (batch, len(filter_size) * embedding_size)
-  h_pool_flat = tf.reshape(h_pool, [-1, FLAGS.num_filters * 3)])
+  h_pool_flat = tf.reshape(h_pool, [-1, FLAGS.num_filters * 3])
   if 'dropout_rate' in params and params['dropout_rate'] > 0.0:
     h_pool_flat = tf.layers.dropout(h_pool_flat, params['dropout_rate'], training=(mode == tf.estimator.ModeKeys.TRAIN))
   logits = tf.layers.dense(h_pool_flat, FLAGS.num_classes, activation=None)
